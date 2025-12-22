@@ -2,7 +2,13 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database";
 import { Property } from "./Property";
 
-export class PropertyPhoto extends Model {}
+export class PropertyPhoto extends Model {
+  public id!: number;
+  public photoUrl!: string;
+  public property_id!: number;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 PropertyPhoto.init(
   {

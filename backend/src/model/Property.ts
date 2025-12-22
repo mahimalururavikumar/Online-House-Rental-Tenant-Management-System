@@ -5,7 +5,10 @@ import { User } from "./User";
 export class Property extends Model {
   public id!: number;
   public title!: string;
+  public description!: string;
+  public rent!: number;
   public location!: string;
+  public amenities!: string;
   public owner_id!: number;
   public isActive!: boolean;
   public readonly createdAt!: Date;

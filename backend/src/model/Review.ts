@@ -1,7 +1,13 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../config/database";
 
-export class Review extends Model {}
+export class Review extends Model {
+  public id!: number;
+  public rating!: number;
+  public comment!: string;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 Review.init(
   {
