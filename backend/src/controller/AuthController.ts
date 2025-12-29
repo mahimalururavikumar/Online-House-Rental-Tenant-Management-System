@@ -111,3 +111,47 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+export const loginAdmin = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            res.status(400).json({ message: "Invalid credentials" });
+            return;
+        }
+
+        if (user.role !== "ADMIN") {
+            res.status(403).json({ message: "Access Denied. Not an Admin." });
+            return;
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            res.status(400).json({ message: "Invalid credentials" });
+            return;
+        }
+
+        const token = jwt.sign(
+            { id: user.id, role: user.role },
+            process.env.JWT_SECRET || "fallback_secret_key",
+            { expiresIn: "1d" }
+        );
+
+        res.json({
+            message: "Admin Login successful",
+            token,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                contact: user.contact
+            },
+        });
+    } catch (error) {
+        console.error("Admin Login error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
