@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Op } from "sequelize";
 import { Property } from "../model/Property";
 import { PropertyPhoto } from "../model/PropertyPhoto";
 import { sequelize } from "../config/database";
@@ -17,10 +18,15 @@ export const addProperty = async (
       return;
     }
 
-    if (!title || !rent || !location) {
+    if (!title || rent === undefined || !location) {
       res
         .status(400)
         .json({ message: "Title, rent, and location are required." });
+      return;
+    }
+
+    if (rent <= 0) {
+      res.status(400).json({ message: "Rent amount must be greater than zero." });
       return;
     }
 
@@ -186,8 +192,24 @@ export const getAllProperties = async (
   res: Response
 ): Promise<void> => {
   try {
+    const { location, maxRent, amenities } = req.query;
+
+    const whereClause: any = { isActive: true };
+
+    if (location) {
+      whereClause.location = { [Op.like]: `%${location}%` };
+    }
+
+    if (maxRent) {
+      whereClause.rent = { [Op.lte]: parseFloat(maxRent as string) };
+    }
+
+    if (amenities) {
+      whereClause.amenities = { [Op.like]: `%${amenities}%` };
+    }
+
     const properties = await Property.findAll({
-      where: { isActive: true },
+      where: whereClause,
       include: [{ model: PropertyPhoto }],
     });
 

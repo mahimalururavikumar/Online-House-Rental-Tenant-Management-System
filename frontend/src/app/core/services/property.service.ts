@@ -11,8 +11,8 @@ export class PropertyService {
 
     constructor(private http: HttpClient) { }
 
-    getAllProperties() {
-        return this.http.get<any>(this.apiUrl);
+    getAllProperties(filters: any = {}) {
+        return this.http.get<any>(this.apiUrl, { params: filters });
     }
 
     getOwnerProperties() {

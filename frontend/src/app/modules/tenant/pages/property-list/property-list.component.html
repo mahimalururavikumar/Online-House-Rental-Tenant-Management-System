@@ -1,5 +1,38 @@
 <div class="property-list-container">
-    <h1>Available Properties</h1>
+    <div class="header-section">
+        <h1>Available Properties</h1>
+
+        <!-- Filter Bar -->
+        <mat-card class="filter-bar">
+            <mat-form-field appearance="outline">
+                <mat-label>Location</mat-label>
+                <input matInput [(ngModel)]="filters.location" placeholder="e.g. Chicago"
+                    (keyup.enter)="applyFilters()">
+                <mat-icon matSuffix>location_on</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Max Rent (₹)</mat-label>
+                <input matInput type="number" [(ngModel)]="filters.maxRent" placeholder="e.g. 5000"
+                    (keyup.enter)="applyFilters()">
+                <mat-icon matSuffix>payments</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Amenities</mat-label>
+                <input matInput [(ngModel)]="filters.amenities" placeholder="e.g. Wi-Fi, AC"
+                    (keyup.enter)="applyFilters()">
+                <mat-icon matSuffix>list</mat-icon>
+            </mat-form-field>
+
+            <div class="filter-actions">
+                <button mat-raised-button color="primary" (click)="applyFilters()">
+                    <mat-icon>search</mat-icon> Search
+                </button>
+                <button mat-button (click)="clearFilters()">Clear</button>
+            </div>
+        </mat-card>
+    </div>
 
     <!-- Loading Spinner -->
     <div *ngIf="loading" class="loading-container">

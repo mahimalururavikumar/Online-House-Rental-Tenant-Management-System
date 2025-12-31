@@ -3,11 +3,42 @@
     max-width: 1400px;
     margin: 0 auto;
 
-    h1 {
-        font-size: 32px;
-        font-weight: 600;
+    .header-section {
         margin-bottom: 32px;
-        color: #1a237e;
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1a237e;
+        }
+
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+            mat-form-field {
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .filter-actions {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                height: 56px;
+
+                button {
+                    height: 48px;
+                }
+            }
+        }
     }
 }
 

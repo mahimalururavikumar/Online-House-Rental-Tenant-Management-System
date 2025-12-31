@@ -5,6 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { PropertyService } from '../../../../core/services/property.service';
 
 @Component({
@@ -16,7 +20,11 @@ import { PropertyService } from '../../../../core/services/property.service';
         MatCardModule,
         MatButtonModule,
         MatProgressSpinnerModule,
-        MatGridListModule
+        MatGridListModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule
     ],
     templateUrl: './property-list.component.html',
     styleUrls: ['./property-list.component.scss']
@@ -24,11 +32,26 @@ import { PropertyService } from '../../../../core/services/property.service';
 export class PropertyListComponent implements OnInit {
     properties: any[] = [];
     loading = true;
+    filters = {
+        location: '',
+        maxRent: '',
+        amenities: ''
+    };
 
     constructor(private propertyService: PropertyService) { }
 
     ngOnInit() {
-        this.propertyService.getAllProperties().subscribe({
+        this.loadProperties();
+    }
+
+    loadProperties() {
+        this.loading = true;
+        const activeFilters: any = {};
+        if (this.filters.location) activeFilters.location = this.filters.location;
+        if (this.filters.maxRent) activeFilters.maxRent = this.filters.maxRent;
+        if (this.filters.amenities) activeFilters.amenities = this.filters.amenities;
+
+        this.propertyService.getAllProperties(activeFilters).subscribe({
             next: res => {
                 this.properties = res.properties || res;
                 this.loading = false;
@@ -38,5 +61,18 @@ export class PropertyListComponent implements OnInit {
                 this.loading = false;
             }
         });
+    }
+
+    applyFilters() {
+        this.loadProperties();
+    }
+
+    clearFilters() {
+        this.filters = {
+            location: '',
+            maxRent: '',
+            amenities: ''
+        };
+        this.loadProperties();
     }
 }
