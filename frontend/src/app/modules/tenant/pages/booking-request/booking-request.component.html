@@ -1,0 +1,53 @@
+<div class="booking-container">
+    <mat-card class="booking-card">
+        <mat-card-header>
+            <div mat-card-avatar class="header-icon">
+                <mat-icon color="primary">event_note</mat-icon>
+            </div>
+            <mat-card-title>Confirm Booking Request</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="info-box" *ngIf="!success && !errorMsg">
+                <mat-icon>info</mat-icon>
+                <p>
+                    You are about to request this property.
+                    The owner will review your application and update the status.
+                </p>
+            </div>
+
+            <div *ngIf="loading" class="state-container">
+                <mat-spinner diameter="40"></mat-spinner>
+                <p>Processing your request...</p>
+            </div>
+
+            <div *ngIf="errorMsg" class="state-container error">
+                <mat-icon>error_outline</mat-icon>
+                <p>{{ errorMsg }}</p>
+            </div>
+
+            <div *ngIf="success" class="state-container success">
+                <mat-icon>check_circle_outline</mat-icon>
+                <h2>Booking Sent!</h2>
+                <p>Your request is now pending owner approval.</p>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <ng-container *ngIf="!success">
+                <button mat-button (click)="goBack()" [disabled]="loading">Cancel</button>
+                <button mat-raised-button color="primary" (click)="submitBooking()" [disabled]="loading">
+                    <mat-icon>send</mat-icon>
+                    Confirm Booking
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="success">
+                <button mat-raised-button color="accent" (click)="goToMyBookings()">
+                    <mat-icon>list_alt</mat-icon>
+                    View My Bookings
+                </button>
+            </ng-container>
+        </mat-card-actions>
+    </mat-card>
+</div>

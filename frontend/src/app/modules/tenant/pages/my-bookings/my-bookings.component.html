@@ -1,0 +1,52 @@
+<div class="bookings-container">
+    <div class="header">
+        <mat-icon color="primary">receipt_long</mat-icon>
+        <h1>My Bookings</h1>
+    </div>
+
+    <div *ngIf="loading" class="loading-wrapper">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading your requests...</p>
+    </div>
+
+    <div *ngIf="!loading && bookings.length > 0" class="bookings-list">
+        <mat-card *ngFor="let booking of bookings" class="booking-card">
+            <mat-card-header>
+                <mat-card-title>{{ booking.Property?.title }}</mat-card-title>
+                <mat-card-subtitle>
+                    <mat-icon class="loc-icon">location_on</mat-icon>
+                    {{ booking.Property?.location }}
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="booking-info">
+                    <div class="info-item">
+                        <span class="label">Rent</span>
+                        <span class="value">₹ {{ booking.Property?.rent }}/month</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Date Requested</span>
+                        <span class="value">{{ booking.createdAt | date:'mediumDate' }}</span>
+                    </div>
+                </div>
+
+                <div class="status-badge" [ngClass]="booking.status.toLowerCase()">
+                    <mat-icon>{{
+                        booking.status === 'Pending' ? 'schedule' :
+                        booking.status === 'Approved' ? 'check_circle' :
+                        'cancel'
+                        }}</mat-icon>
+                    <span>{{ booking.status }}</span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">history</mat-icon>
+        <h2>No bookings yet</h2>
+        <p>You haven't requested any properties. Browse available listings to get started!</p>
+        <button mat-raised-button color="primary" routerLink="/tenant">Browse Properties</button>
+    </div>
+</div>

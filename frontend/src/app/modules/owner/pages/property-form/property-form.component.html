@@ -1,0 +1,91 @@
+<div class="form-container">
+    <button mat-icon-button color="primary" (click)="goBack()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <mat-card class="form-card">
+        <mat-card-header>
+            <div mat-card-avatar class="header-icon">
+                <mat-icon color="primary">{{ isEdit ? 'edit_location' : 'add_business' }}</mat-icon>
+            </div>
+            <mat-card-title>{{ isEdit ? 'Edit Property' : 'Add New Property' }}</mat-card-title>
+            <mat-card-subtitle>{{ isEdit ? 'Update your property details' : 'List a new property on the platform'
+                }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="propertyForm" (ngSubmit)="submit()" class="property-form">
+
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Property Title</mat-label>
+                        <input matInput formControlName="title" placeholder="e.g. Modern 2BHK Apartment in Downtown" />
+                        <mat-error *ngIf="propertyForm.get('title')?.hasError('required')">Title is required</mat-error>
+                        <mat-error *ngIf="propertyForm.get('title')?.hasError('minlength')">Title must be at least 5
+                            characters</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row split">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Location</mat-label>
+                        <input matInput formControlName="location" placeholder="e.g. Mumbai, Maharashtra" />
+                        <mat-error *ngIf="propertyForm.get('location')?.hasError('required')">Location is
+                            required</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Monthly Rent (₹)</mat-label>
+                        <input matInput type="number" formControlName="rent" placeholder="0.00" />
+                        <mat-error *ngIf="propertyForm.get('rent')?.hasError('required')">Rent is required</mat-error>
+                        <mat-error *ngIf="propertyForm.get('rent')?.hasError('min')">Rent must be greater than
+                            0</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row" *ngIf="isEdit">
+                    <mat-checkbox formControlName="isActive">Property is Active/Listed</mat-checkbox>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description" rows="5"
+                            placeholder="Describe the property, neighborhood, and highlights..."></textarea>
+                        <mat-error *ngIf="propertyForm.get('description')?.hasError('required')">Description is
+                            required</mat-error>
+                        <mat-error *ngIf="propertyForm.get('description')?.hasError('minlength')">Description must be at
+                            least 10 characters</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Amenities (comma separated)</mat-label>
+                        <input matInput formControlName="amenities" placeholder="e.g. WiFi, Parking, AC, Gym" />
+                        <mat-hint>Separate each amenity with a comma</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Photo URLs (comma separated)</mat-label>
+                        <textarea matInput formControlName="photos" rows="3"
+                            placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg"></textarea>
+                        <mat-hint>Paste image links separated by commas</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="actions">
+                    <button mat-button type="button" (click)="goBack()" [disabled]="loading">Cancel</button>
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="propertyForm.invalid || loading">
+                        <mat-icon *ngIf="!loading">{{ isEdit ? 'save' : 'publish' }}</mat-icon>
+                        <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+                        <span>{{ isEdit ? 'Update Property' : 'List Property' }}</span>
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

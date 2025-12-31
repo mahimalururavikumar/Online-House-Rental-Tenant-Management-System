@@ -1,0 +1,60 @@
+<div class="requests-container">
+    <div class="header">
+        <button mat-icon-button (click)="goBack()" title="Back to Properties">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h1>Booking Requests</h1>
+    </div>
+
+    <div *ngIf="loading" class="loading-wrapper">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading requests...</p>
+    </div>
+
+    <div *ngIf="!loading && bookings.length > 0" class="requests-list">
+        <mat-card *ngFor="let b of bookings" class="booking-card" [ngClass]="b.status.toLowerCase()">
+            <mat-card-header>
+                <div mat-card-avatar class="tenant-avatar">
+                    <mat-icon>person</mat-icon>
+                </div>
+                <mat-card-title>{{ b.tenant?.name }}</mat-card-title>
+                <mat-card-subtitle>{{ b.tenant?.email }}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="booking-details">
+                    <div class="detail-row">
+                        <mat-icon>event</mat-icon>
+                        <span>Requested on: {{ b.createdAt | date:'medium' }}</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-label">Current Status:</span>
+                        <span class="status-value">{{ b.status }}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions *ngIf="b.status === 'Pending'" class="actions-group">
+                <button mat-raised-button color="primary" (click)="updateStatus(b.id, 'Approved')">
+                    <mat-icon>check</mat-icon>
+                    Approve
+                </button>
+                <button mat-stroked-button color="warn" (click)="updateStatus(b.id, 'Rejected')">
+                    <mat-icon>close</mat-icon>
+                    Reject
+                </button>
+            </mat-card-actions>
+
+            <mat-card-footer *ngIf="b.status !== 'Pending'" class="final-status">
+                <mat-icon>{{ b.status === 'Approved' ? 'check_circle' : 'cancel' }}</mat-icon>
+                <span>This request has been {{ b.status.toLowerCase() }}</span>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+
+    <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">assignment_late</mat-icon>
+        <h2>No Requests Yet</h2>
+        <p>There are no booking requests for this property at the moment.</p>
+    </div>
+</div>

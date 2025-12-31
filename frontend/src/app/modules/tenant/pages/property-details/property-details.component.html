@@ -1,0 +1,86 @@
+<div class="details-container">
+    <div *ngIf="loading" class="loading-wrapper">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <ng-container *ngIf="!loading && property">
+        <button mat-icon-button (click)="goBack()" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <mat-card class="details-card">
+            <div class="image-gallery">
+                <img mat-card-image
+                    [src]="property.PropertyPhotos?.[0]?.photoUrl || 'https://via.placeholder.com/800x400?text=No+Image+Available'"
+                    alt="Property Image" class="main-image">
+            </div>
+
+            <mat-card-header>
+                <div mat-card-avatar class="header-icon">
+                    <mat-icon color="primary">home</mat-icon>
+                </div>
+                <mat-card-title>{{ property.title }}</mat-card-title>
+                <mat-card-subtitle>
+                    <mat-icon class="location-icon">location_on</mat-icon>
+                    {{ property.location }}
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="price-section">
+                    <span class="currency">₹</span>
+                    <span class="amount">{{ property.rent }}</span>
+                    <span class="period">/ month</span>
+                </div>
+
+                <div class="section">
+                    <h3>Description</h3>
+                    <p class="description-text">{{ property.description }}</p>
+                </div>
+
+                <div class="section" *ngIf="property.amenities">
+                    <h3>Amenities</h3>
+                    <mat-chip-set>
+                        <mat-chip *ngFor="let amenity of property.amenities?.split(',')">
+                            {{ amenity.trim() }}
+                        </mat-chip>
+                    </mat-chip-set>
+                </div>
+
+                <div class="property-meta">
+                    <div class="meta-item" *ngIf="property.bedrooms">
+                        <mat-icon>king_bed</mat-icon>
+                        <span>{{ property.bedrooms }} Bedrooms</span>
+                    </div>
+                    <div class="meta-item" *ngIf="property.bathrooms">
+                        <mat-icon>bathtub</mat-icon>
+                        <span>{{ property.bathrooms }} Bathrooms</span>
+                    </div>
+                    <div class="meta-item" *ngIf="property.area">
+                        <mat-icon>square_foot</mat-icon>
+                        <span>{{ property.area }} sq.ft</span>
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions align="end" class="actions-footer">
+                <div *ngIf="!property.isActive" class="status-badge inactive">
+                    <mat-icon>info</mat-icon>
+                    Property not available
+                </div>
+
+                <button mat-raised-button color="primary" (click)="bookProperty()" *ngIf="property.isActive"
+                    class="book-btn">
+                    <mat-icon>event_available</mat-icon>
+                    Book Now
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
+
+    <div *ngIf="!loading && !property" class="error-wrapper">
+        <mat-icon class="error-icon">error_outline</mat-icon>
+        <h2>Property not found</h2>
+        <button mat-stroked-button color="primary" (click)="goBack()">View Other Properties</button>
+    </div>
+</div>

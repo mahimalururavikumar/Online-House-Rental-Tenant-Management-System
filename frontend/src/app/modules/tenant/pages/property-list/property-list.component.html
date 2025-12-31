@@ -1,0 +1,47 @@
+<div class="property-list-container">
+    <h1>Available Properties</h1>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Property Grid -->
+    <div *ngIf="!loading" class="property-grid">
+        <mat-card *ngFor="let property of properties" class="property-card">
+            <img mat-card-image
+                [src]="property.PropertyPhotos?.[0]?.photoUrl || 'https://via.placeholder.com/400x300?text=No+Image'"
+                [alt]="property.title" class="property-image" />
+
+            <mat-card-header>
+                <mat-card-title>{{ property.title }}</mat-card-title>
+                <mat-card-subtitle>{{ property.location }}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <p class="property-description">{{ property.description }}</p>
+                <div class="property-details">
+                    <span class="rent-amount">₹{{ property.rent }}/month</span>
+                    <span class="property-type">{{ property.propertyType }}</span>
+                </div>
+                <div class="property-features">
+                    <span *ngIf="property.bedrooms">🛏️ {{ property.bedrooms }} Beds</span>
+                    <span *ngIf="property.bathrooms">🚿 {{ property.bathrooms }} Baths</span>
+                    <span *ngIf="property.area">📐 {{ property.area }} sq.ft</span>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="primary" [routerLink]="['/tenant/property', property.id]">
+                    View Details
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && properties.length === 0" class="empty-state">
+        <h2>No Properties Available</h2>
+        <p>Check back later for new listings!</p>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="owner-dashboard">
+    <div class="header-section">
+        <h1>My Properties</h1>
+        <button mat-raised-button color="primary" routerLink="/owner/add-property">
+            <mat-icon>add</mat-icon>
+            List New Property
+        </button>
+    </div>
+
+    <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading your properties...</p>
+    </div>
+
+    <div *ngIf="!loading && properties.length > 0" class="properties-grid">
+        <mat-card *ngFor="let p of properties" class="property-card">
+            <div class="card-image-wrapper">
+                <img mat-card-image
+                    [src]="p.PropertyPhotos?.[0]?.photoUrl || 'https://via.placeholder.com/400x250?text=No+Photo'"
+                    [alt]="p.title">
+                <div class="status-overlay">
+                    <mat-chip [ngClass]="p.isActive ? 'active-chip' : 'inactive-chip'" selected>
+                        {{ p.isActive ? 'Active' : 'Inactive' }}
+                    </mat-chip>
+                </div>
+            </div>
+
+            <mat-card-header>
+                <mat-card-title>{{ p.title }}</mat-card-title>
+                <mat-card-subtitle>{{ p.location }}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="price-tag">
+                    <span class="currency">₹</span>
+                    <span class="amount">{{ p.rent }}</span>
+                    <span class="period">/ month</span>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions class="actions-group">
+                <button mat-stroked-button color="primary" [routerLink]="['/owner/bookings', p.id]">
+                    <mat-icon>event_note</mat-icon>
+                    Bookings
+                </button>
+                <button mat-stroked-button color="accent" [routerLink]="['/owner/edit', p.id]">
+                    <mat-icon>edit</mat-icon>
+                    Edit
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteProperty(p.id)" title="Delete Property">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <div *ngIf="!loading && properties.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">apartment</mat-icon>
+        <h2>No Properties Listed</h2>
+        <p>Start earning by listing your first property today!</p>
+        <button mat-raised-button color="primary" routerLink="/owner/add-property">
+            List Property Now
+        </button>
+    </div>
+</div>

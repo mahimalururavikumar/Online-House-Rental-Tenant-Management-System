@@ -1,0 +1,116 @@
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #004d40 0%, #00796b 100%);
+    padding: 24px;
+}
+
+.auth-card-container {
+    width: 100%;
+    max-width: 480px;
+}
+
+.auth-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+
+    .auth-header {
+        padding: 24px 0 20px;
+        text-align: center;
+
+        .logo-container {
+            width: 64px;
+            height: 64px;
+            background: #e0f2f1;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+
+            mat-icon {
+                font-size: 32px;
+                width: 32px;
+                height: 32px;
+                color: #00796b;
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #004d40;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #666;
+            font-size: 14px;
+        }
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        mat-form-field {
+            width: 100%;
+        }
+
+        .role-icon {
+            margin-right: 8px;
+            vertical-align: middle;
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .auth-submit {
+            margin-top: 16px;
+            height: 52px;
+            border-radius: 26px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            background-color: #00796b;
+        }
+    }
+
+    .auth-footer {
+        padding: 24px 0 16px;
+        text-align: center;
+        border-top: 1px solid #f0f0f0;
+
+        p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+
+            a {
+                color: #00796b;
+                font-weight: 600;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+// Media Queries for Mobile
+@media (max-width: 480px) {
+    .auth-wrapper {
+        padding: 16px;
+    }
+
+    .auth-card {
+        padding: 8px;
+    }
+}
