@@ -1,20 +1,27 @@
 import { Routes } from '@angular/router';
+import { TenantLayoutComponent } from './components/tenant-layout/tenant-layout.component';
 
 export const TENANT_ROUTES: Routes = [
     {
         path: '',
-        loadComponent: () => import('./pages/property-list/property-list.component').then(m => m.PropertyListComponent)
-    },
-    {
-        path: 'property/:id',
-        loadComponent: () => import('./pages/property-details/property-details.component').then(m => m.PropertyDetailsComponent)
-    },
-    {
-        path: 'book/:id',
-        loadComponent: () => import('./pages/booking-request/booking-request.component').then(m => m.BookingRequestComponent)
-    },
-    {
-        path: 'my-bookings',
-        loadComponent: () => import('./pages/my-bookings/my-bookings.component').then(m => m.MyBookingsComponent)
+        component: TenantLayoutComponent,
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./pages/property-list/property-list.component').then(m => m.PropertyListComponent)
+            },
+            {
+                path: 'property/:id',
+                loadComponent: () => import('./pages/property-details/property-details.component').then(m => m.PropertyDetailsComponent)
+            },
+            {
+                path: 'book/:id',
+                loadComponent: () => import('./pages/booking-request/booking-request.component').then(m => m.BookingRequestComponent)
+            },
+            {
+                path: 'my-bookings',
+                loadComponent: () => import('./pages/my-bookings/my-bookings.component').then(m => m.MyBookingsComponent)
+            }
+        ]
     }
 ];

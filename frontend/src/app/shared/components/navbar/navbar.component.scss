@@ -1,0 +1,38 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 2rem;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid white;
+}

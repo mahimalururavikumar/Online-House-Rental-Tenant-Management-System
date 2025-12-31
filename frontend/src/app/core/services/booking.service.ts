@@ -18,6 +18,10 @@ export class BookingService {
         return this.http.get(`${this.apiUrl}/my`);
     }
 
+    getOwnerAllBookings() {
+        return this.http.get<any>(`${this.apiUrl}/owner-requests`);
+    }
+
     getBookingsForProperty(propertyId: number) {
         return this.http.get<any>(`${this.apiUrl}/property/${propertyId}`);
     }

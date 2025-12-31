@@ -1,0 +1,64 @@
+<mat-toolbar color="primary" class="navbar">
+    <span class="logo"
+        [routerLink]="authService.isAdmin() ? '/admin' : (authService.isOwner() ? '/owner' : '/tenant')">HouseRental</span>
+
+    <div class="nav-links">
+        <!-- Tenant Links -->
+        <ng-container *ngIf="authService.isTenant()">
+            <button mat-button routerLink="/tenant" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>home</mat-icon>
+                Home
+            </button>
+            <button mat-button routerLink="/tenant/my-bookings" routerLinkActive="active">
+                <mat-icon>book</mat-icon>
+                My Bookings
+            </button>
+        </ng-container>
+
+        <!-- Owner Links -->
+        <ng-container *ngIf="authService.isOwner()">
+            <button mat-button routerLink="/owner" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>home</mat-icon>
+                Home
+            </button>
+            <button mat-button routerLink="/owner/booking-requests" routerLinkActive="active">
+                <mat-icon>notification_important</mat-icon>
+                Booking-requests
+            </button>
+            <button mat-button routerLink="/owner/my-properties" routerLinkActive="active">
+                <mat-icon>business</mat-icon>
+                My Properties
+            </button>
+            <button mat-button routerLink="/owner/add" routerLinkActive="active">
+                <mat-icon>add_circle</mat-icon>
+                Add Property
+            </button>
+        </ng-container>
+
+        <!-- Admin Links -->
+        <ng-container *ngIf="authService.isAdmin()">
+            <button mat-button routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>dashboard</mat-icon>
+                Home
+            </button>
+            <button mat-button routerLink="/admin/bookings" routerLinkActive="active">
+                <mat-icon>event_note</mat-icon>
+                Bookings
+            </button>
+            <button mat-button routerLink="/admin/properties" routerLinkActive="active">
+                <mat-icon>apartment</mat-icon>
+                Properties
+            </button>
+            <button mat-button routerLink="/admin/users" routerLinkActive="active">
+                <mat-icon>people</mat-icon>
+                Users
+            </button>
+        </ng-container>
+    </div>
+
+    <span class="spacer"></span>
+
+    <button mat-icon-button (click)="$event.stopPropagation(); logout()" matTooltip="Logout">
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>

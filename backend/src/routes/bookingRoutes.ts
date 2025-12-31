@@ -1,5 +1,5 @@
 import express from "express";
-import { createBooking, getTenantBookings, getBookingRequests, updateBookingStatus } from "../controller/BookingController";
+import { createBooking, getTenantBookings, getBookingRequests, updateBookingStatus, getOwnerAllBookings } from "../controller/BookingController";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { authorizeRoles } from "../middlewares/roleMiddleware";
 
@@ -27,6 +27,14 @@ router.get(
     authMiddleware,
     authorizeRoles("TENANT"),
     getTenantBookings
+);
+
+// Owner: View All Booking Requests
+router.get(
+    "/owner-requests",
+    authMiddleware,
+    authorizeRoles("OWNER"),
+    getOwnerAllBookings
 );
 
 // Tenant: Request Booking

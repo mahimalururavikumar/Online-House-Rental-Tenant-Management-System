@@ -26,6 +26,7 @@ import { PropertyService } from '../../../../core/services/property.service';
 export class PropertyDetailsComponent implements OnInit {
   property: any;
   loading = true;
+  currentImageIndex = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,6 +52,18 @@ export class PropertyDetailsComponent implements OnInit {
 
   bookProperty() {
     this.router.navigate(['/tenant/book', this.property.id]);
+  }
+
+  nextImage() {
+    if (this.property?.PropertyPhotos?.length) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.property.PropertyPhotos.length;
+    }
+  }
+
+  prevImage() {
+    if (this.property?.PropertyPhotos?.length) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.property.PropertyPhotos.length) % this.property.PropertyPhotos.length;
+    }
   }
 
   goBack() {

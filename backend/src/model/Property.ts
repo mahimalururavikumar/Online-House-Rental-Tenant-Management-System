@@ -26,7 +26,7 @@ Property.init(
       validate: { min: 1 }
     },
     location: { type: DataTypes.STRING, allowNull: false },
-    amenities: DataTypes.STRING,
+    amenities: DataTypes.TEXT,
     isActive: { type: DataTypes.BOOLEAN, defaultValue: true }
   },
   { sequelize, tableName: "properties" }

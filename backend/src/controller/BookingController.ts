@@ -136,6 +136,42 @@ export const getBookingRequests = async (req: Request, res: Response): Promise<v
     }
 };
 
+export const getOwnerAllBookings = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const owner_id = req.user?.id;
+
+        if (!owner_id) {
+            res.status(401).json({ message: "Unauthorized. User ID missing." });
+            return;
+        }
+
+        // Fetch all bookings for all properties owned by this owner
+        const bookings = await Booking.findAll({
+            include: [
+                {
+                    model: Property,
+                    where: { owner_id },
+                    attributes: ["id", "title", "location"]
+                },
+                {
+                    model: User,
+                    as: "tenant",
+                    attributes: ["id", "name", "email", "contact"]
+                }
+            ],
+            order: [["createdAt", "DESC"]]
+        });
+
+        res.json({
+            message: "Owner bookings fetched successfully",
+            bookings,
+        });
+    } catch (error) {
+        console.error("Get Owner All Bookings Error:", error);
+        res.status(500).json({ message: "Internal server error", error });
+    }
+};
+
 export const updateBookingStatus = async (req: Request, res: Response): Promise<void> => {
     const transaction = await sequelize.transaction();
     try {

@@ -13,7 +13,7 @@ export class PropertyPhoto extends Model {
 PropertyPhoto.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    photoUrl: { type: DataTypes.STRING, allowNull: false }
+    photoUrl: { type: DataTypes.TEXT("long"), allowNull: false }
   },
   { sequelize, tableName: "property_photos" }
 );

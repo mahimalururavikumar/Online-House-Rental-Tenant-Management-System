@@ -1,0 +1,47 @@
+<div class="booking-requests-container">
+    <h1>All Booking Requests</h1>
+
+    <div *ngIf="loading" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="!loading && bookings.length > 0" class="bookings-grid">
+        <mat-card *ngFor="let booking of bookings" class="booking-card">
+            <mat-card-header>
+                <mat-card-title>{{ booking.Property.title }}</mat-card-title>
+                <mat-card-subtitle>{{ booking.Property.location }}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="tenant-info">
+                    <h3>Tenant Details</h3>
+                    <p><strong>Name:</strong> {{ booking.tenant.name }}</p>
+                    <p><strong>Email:</strong> {{ booking.tenant.email }}</p>
+                    <p><strong>Contact:</strong> {{ booking.tenant.contact }}</p>
+                </div>
+                <div class="booking-status">
+                    <p><strong>Status:</strong>
+                        <span [class]="'status-badge ' + booking.status.toLowerCase()">
+                            {{ booking.status }}
+                        </span>
+                    </p>
+                    <p><strong>Requested on:</strong> {{ booking.createdAt | date:'medium' }}</p>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions *ngIf="booking.status === 'Pending'">
+                <button mat-raised-button color="primary" (click)="updateStatus(booking.id, 'Approved')">
+                    Approve
+                </button>
+                <button mat-raised-button color="warn" (click)="updateStatus(booking.id, 'Rejected')">
+                    Reject
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+        <mat-icon>event_busy</mat-icon>
+        <p>No booking requests found.</p>
+    </div>
+</div>

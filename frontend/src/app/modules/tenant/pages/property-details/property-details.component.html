@@ -9,10 +9,30 @@
         </button>
 
         <mat-card class="details-card">
-            <div class="image-gallery">
-                <img mat-card-image
-                    [src]="property.PropertyPhotos?.[0]?.photoUrl || 'https://via.placeholder.com/800x400?text=No+Image+Available'"
-                    alt="Property Image" class="main-image">
+            <div class="image-gallery" *ngIf="property.PropertyPhotos?.length">
+                <div class="carousel-container">
+                    <img mat-card-image [src]="property.PropertyPhotos[currentImageIndex].photoUrl" alt="Property Image"
+                        class="main-image">
+
+                    <ng-container *ngIf="property.PropertyPhotos.length > 1">
+                        <button mat-icon-button class="carousel-nav prev" (click)="prevImage()">
+                            <mat-icon>chevron_left</mat-icon>
+                        </button>
+                        <button mat-icon-button class="carousel-nav next" (click)="nextImage()">
+                            <mat-icon>chevron_right</mat-icon>
+                        </button>
+
+                        <div class="carousel-indicators">
+                            <span *ngFor="let photo of property.PropertyPhotos; let i = index" class="indicator"
+                                [class.active]="i === currentImageIndex"></span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="image-gallery" *ngIf="!property.PropertyPhotos?.length">
+                <img mat-card-image src="https://via.placeholder.com/800x400?text=No+Image+Available" alt="No Image"
+                    class="main-image">
             </div>
 
             <mat-card-header>

@@ -1,0 +1,85 @@
+.booking-requests-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bookings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.booking-card {
+    display: flex;
+    flex-direction: column;
+
+    mat-card-header {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
+    }
+}
+
+.tenant-info {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 4px;
+
+    h3 {
+        margin-top: 0;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    p {
+        margin: 0.3rem 0;
+    }
+}
+
+.booking-status {
+    margin-bottom: 1rem;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    &.pending {
+        background: #fff3e0;
+        color: #ef6c00;
+    }
+
+    &.approved {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    &.rejected {
+        background: #ffebee;
+        color: #c62828;
+    }
+}
+
+.empty-state {
+    text-align: center;
+    margin-top: 5rem;
+    color: #999;
+
+    mat-icon {
+        font-size: 4rem;
+        width: 4rem;
+        height: 4rem;
+    }
+}
+
+mat-card-actions {
+    margin-top: auto;
+    padding: 1rem !important;
+    display: flex;
+    gap: 1rem;
+}

@@ -40,9 +40,28 @@ export class AuthService {
         return decoded?.role || null;
     }
 
+    getUserId(): number | null {
+        const token = this.getToken();
+        if (!token) return null;
+        const decoded = this.jwtHelper.decodeToken(token);
+        return decoded?.id || null;
+    }
+
     isAuthenticated(): boolean {
         const token = this.getToken();
         return token ? !this.jwtHelper.isTokenExpired(token) : false;
+    }
+
+    isAdmin(): boolean {
+        return this.getUserRole()?.toUpperCase() === 'ADMIN';
+    }
+
+    isOwner(): boolean {
+        return this.getUserRole()?.toUpperCase() === 'OWNER';
+    }
+
+    isTenant(): boolean {
+        return this.getUserRole()?.toUpperCase() === 'TENANT';
     }
 
     logout() {
